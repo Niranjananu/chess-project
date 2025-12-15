@@ -31,8 +31,8 @@ constexpr int RANK_OFFSET = 1;                           // Index offset for ran
 // ------------------------------------------
 // This class serves as a base class for all chess pieces
 // It contains common attributes and methods that all chess pieces share
-*/
 // --- Class Definition --- //
+*/
 class chess_p 
 {
 private:

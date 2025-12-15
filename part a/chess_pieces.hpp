@@ -26,6 +26,12 @@ public:
     MoveResult is_move_ok(std::string state_of_board ) override; // state_of_board: current state of the chess board
 };
 
+/*
+// Class definition for King chess piece
+// ------------------------------------------
+// This class inherits from the base chess_p class
+// It contains specific attributes and methods for the King piece
+*/
 class king : public chess_p 
 {
 private:
@@ -36,7 +42,7 @@ public:
     // -- Constructor --//
 
     king(const std::string& start_loc, bool is_it_white);
-    
+
     // --- Override Methods --- //
 
     MoveResult is_move_ok(std::string state_of_board ) override; // state_of_board: current state of the chess board
