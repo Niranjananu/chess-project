@@ -146,3 +146,4 @@ bool chess_p::is_there_check(std::string state_of_board, char turn)
 }
 
 
+ 

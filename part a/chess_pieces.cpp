@@ -203,6 +203,32 @@ MoveResult rook::is_move_ok(std::string state_of_board)
     }
 }
 
+/*
+^   * fanction name:        king::king
+---------------------------------------------------------------------------------------
+    * fanction description: Initializes a King chess piece with its starting location and color.
+    * fanction input:       const std::string& start_loc, bool is_it_white
+        - start_loc:        The starting location of the King piece.
+        - is_it_white:      Indicates whether the piece is white (true) or black (false).
+    * fanction output:      void
+    * return value:         None.
+    * eficency:             O(1) - constant time complexity.    
+---------------------------------------------------------------------------------------
+*/
+king::king(const std::string& start_loc, bool is_it_white) : chess_p(start_loc, is_it_white) {}
 
-
- 
+/*
+^   * fanction name:        king::is_move_ok
+--------------------------------------------------------------------------------------- 
+    * fanction description: Determines if the proposed move for the King piece is valid based on the current state of the chess board.
+    * fanction input:       std::string state_of_board
+        - state_of_board:   The current state of the chess board.
+    * fanction output:      MoveResult
+    * return value:         An enumeration value indicating the result of the move validation.
+    * eficency:             O(n) - linear time complexity, where n is the number of squares checked for path clearance.
+---------------------------------------------------------------------------------------
+*/
+MoveResult king::is_move_ok(std::string state_of_board )
+{
+    // todo implement king movement validation
+}
