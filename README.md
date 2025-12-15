@@ -9,4 +9,4 @@ the basic code of the chess pieces
 ![A screenshot of the project](./assets/screenshot.png)
 
 the full logic of the class's
-![A screenshot of the project](./assets/_class_.html)
+![A screenshot of the project](./assets/1.png)
