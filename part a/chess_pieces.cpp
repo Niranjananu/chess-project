@@ -202,3 +202,6 @@ MoveResult rook::is_move_ok(std::string state_of_board)
         return MoveResult::Valid;
     }
 }
+
+
+
