@@ -3,6 +3,20 @@
 
 #include <iostream> // for std::string and other I/O operations
 
+enum MoveResult 
+{
+    Valid = 0,
+    Valid_Check = 1,
+    Invalid_NoPieceAtSource = 2,
+    Invalid_DestinationOccupiedByOwnPiece = 3,
+    Invalid_SelfCheck = 4,
+    Invalid_IndexOutOfRange = 5,
+    Invalid_IllegalMovement = 6,
+    Invalid_SameSourceAndDestination = 7,
+    Valid_Checkmate = 8
+} 
+moveResult;
+
 /*
 // Class definition for chess pieces 
 // ------------------------------------------
@@ -30,6 +44,7 @@ public:
 
     bool get_is_alive(); // returns is_alive status
     bool get_is_white(); // returns is_white status
+    std::string get_destination(); // returns destination location
 
     // --- Setters --- //
 
@@ -43,7 +58,7 @@ public:
 
     // --- Virtual Methods --- //
 
-    virtual bool is_move_ok(std::string state_of_board ) = 0; // state_of_board: current state of the chess board
+    virtual MoveResult is_move_ok(std::string state_of_board ) = 0; // state_of_board: current state of the chess board
 
 };
 
