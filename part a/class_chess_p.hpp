@@ -64,4 +64,4 @@ public:
 
 };
 
-#endif // CLASS_CHESS_P_HPP
+#endif // CLASS_CHESS_P_HPP 

@@ -205,3 +205,4 @@ MoveResult rook::is_move_ok(std::string state_of_board)
 
 
 
+ 

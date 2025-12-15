@@ -43,3 +43,5 @@ public:
 
 
 #endif // CHESS_PIECES_HPP
+
+
