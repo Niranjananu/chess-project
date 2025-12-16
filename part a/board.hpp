@@ -35,6 +35,7 @@ public:
 
     // -- Constructor --//
     board(); // initializes the chess board with pieces in starting positions
+    
     // --- getters --- //
 
     // --- setters --- //
