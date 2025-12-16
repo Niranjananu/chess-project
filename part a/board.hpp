@@ -15,7 +15,7 @@ private:
     // Private member variables
 
     // !pointers to all the chess pieces on the board we will format it to send to the frontend
-    chess_p* board[BOARD_SIZE_UP][BOARD_SIZE_RIGHT] = { nullptr }; // 8x8 board of chess pieces
+    chess_p* chess_board[BOARD_SIZE_UP][BOARD_SIZE_RIGHT] = { nullptr }; // 8x8 board of chess pieces
 
     // !will hold the state of the board as a string after formatting it from the pieces on the board and will be used to send to the frontend
     std::string state_of_board_as_string; // string representation of the board state in the frontend format
@@ -34,7 +34,7 @@ public:
     //---------------//
 
     // -- Constructor --//
-
+    board(); // initializes the chess board with pieces in starting positions
     // --- getters --- //
 
     // --- setters --- //
