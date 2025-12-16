@@ -69,6 +69,12 @@ public:
 	MoveResult is_move_ok(std::string state_of_board ) override;    
 };     
 
+/*
+// Class definition for queen chess piece
+// ------------------------------------------
+// This class inherits from the base chess_p class
+// It contains specific attributes and methods for the queen piece
+*/
 class queen : public chess_p
 {
 private:
@@ -82,6 +88,46 @@ public:
     // --- Override Methods --- //
 
 	MoveResult is_move_ok(std::string state_of_board ) override;
+};
+
+/*
+// Class definition for bishop chess piece
+// ------------------------------------------
+// This class inherits from the base chess_p class
+// It contains specific attributes and methods for the bishop piece
+*/
+class bishop : public chess_p
+{
+private:
+    // Private member variables
+public:
+    // Public methods
+    // -- Constructor --//
+    bishop(std::string start_loc, bool is_it_white);
+
+    // --- Override Methods --- //
+
+    MoveResult is_move_ok(std::string state_of_board ) override;
+};
+
+/*
+// Class definition for pawn chess piece
+// ------------------------------------------
+// This class inherits from the base chess_p class
+// It contains specific attributes and methods for the pawn piece
+*/  
+class pawn : public chess_p
+{
+private:
+    // Private member variables
+public:
+    // Public methods
+    // -- Constructor --//
+    pawn(std::string start_loc, bool is_it_white);
+
+    // --- Override Methods --- //
+
+    MoveResult is_move_ok(std::string state_of_board ) override;
 };
 
 #endif // CHESS_PIECES_HPP
