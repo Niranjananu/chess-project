@@ -1,12 +1,29 @@
 #include <iostream>
 #include "board.hpp"
 
+void test_rook();
+void test_knight();
+void test_bishop();
+void test_queen();
+void test_pawn();
+void test_king();
+
 int main() 
 {
     std::cout << "Chess pieces module loaded successfully." << std::endl;
+    
     // some tests:
 
     // rook
+    test_rook();
+
+    std::cin.get(); // this keeps the console window open until a key is pressed
+    return 0;
+}
+
+void test_rook()
+{
+        // rook
     rook test_rook("a1", true);
 
     if(test_rook.give_location() == "a1" && test_rook.get_is_alive() == true && test_rook.get_is_white() == true)
@@ -56,9 +73,24 @@ int main()
         std::cout << "Rook set_die() test failed. \n\n\n" << std::endl;
     }
     // end of tests for rook
-
-
-    std::cin.get(); // this keeps the console window open until a key is pressed
-    return 0;
 }
+void test_knight()
+{
 
+}
+void test_bishop()
+{
+
+}
+void test_queen()
+{
+
+}
+void test_pawn()
+{
+
+}
+void test_king()
+{
+
+}
