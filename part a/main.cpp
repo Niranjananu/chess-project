@@ -5,6 +5,7 @@ int main()
 {
     std::cout << "Chess pieces module loaded successfully." << std::endl;
     // some tests:
+    
     // rook
     rook test_rook("a1", true);
     std::cout << test_rook.give_location() << std::endl; // see if location is set correctly

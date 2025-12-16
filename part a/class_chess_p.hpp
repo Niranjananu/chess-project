@@ -44,6 +44,8 @@ private:
 public:
     // Public methods
 
+    virtual ~chess_p() = default;
+
     // -- Constructor --//
 
     chess_p(std::string loc, bool is_it_white); // loc: initial location, color: true for white, false for black
@@ -63,8 +65,6 @@ public:
 
     void move(); // updates location to destination if move is valid
     std::string give_location(); // returns current location of the piece
-    bool is_there_check(std::string state_of_board, char turn);
-
 
     // --- Virtual Methods --- //
 

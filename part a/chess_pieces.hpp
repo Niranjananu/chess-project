@@ -4,6 +4,8 @@
 #include <iostream> // for std::string and other I/O operations
 #include "class_chess_p.hpp"
 
+bool is_there_check(std::string state_of_board);
+
 /*
 // Class definition for Rook chess piece
 // ------------------------------------------

@@ -153,7 +153,7 @@ MoveResult rook::is_move_ok(std::string state_of_board)
     new_state_of_board = state_of_board;
     new_state_of_board[dest_index] = new_state_of_board[source_index]; // Move piece to destination
     new_state_of_board[source_index] = EMPTY_SQUARE;                   // Empty the source square
-    if (is_there_check(new_state_of_board, turn))
+    if (is_there_check(new_state_of_board))
     {
         return MoveResult::Invalid_SelfCheck;
     }
@@ -166,7 +166,7 @@ MoveResult rook::is_move_ok(std::string state_of_board)
     new_state_of_board[dest_index] = new_state_of_board[source_index]; // Move piece to destination
     new_state_of_board[source_index] = EMPTY_SQUARE;                   // Empty the source square
     // Check if the move puts the opponent in check
-    if (is_there_check(new_state_of_board, turn))
+    if (is_there_check(new_state_of_board))
     {
         return MoveResult::Valid_Check;
     }
@@ -216,6 +216,266 @@ MoveResult rook::is_move_ok(std::string state_of_board)
 ---------------------------------------------------------------------------------------
 */
 king::king(const std::string& start_loc, bool is_it_white) : chess_p(start_loc, is_it_white) {}
+
+/*^   * fanction name:      chess_p::is_there_check
+---------------------------------------------------------------------------------------
+    * fanction description: Checks if the current player's king is in check based on the state of the chess board.
+    * fanction input:       std::string state_of_board, char turn
+        - state_of_board:   The current state of the chess board.
+        - turn:             Indicates whose turn it is ('0' for white, '1' for black).
+    * fanction output:      bool
+    * return value:         True if the king is in check, false otherwise.
+    * eficency:             O(n) - linear time complexity, where n is the number of squares on the board.
+---------------------------------------------------------------------------------------
+*/
+bool is_there_check(std::string state_of_board)
+{
+	// first we need to get whos turn it is
+	// it is in the last character of state_of_board
+	char current_turn = state_of_board[BOARD_STATE_LENGTH - 1];// we have 65 characters 0-63 for the board and 64 for the turn and 65 is the null terminator
+	char king_char = '\0';
+	std::string king_location = "";
+	int i = 0;
+	bool found = false;
+	char file = '\0';
+    char rank = '\0';
+	char piece_char = '\0';
+    bool piece_is_white = false;
+    chess_p* temp_piece = nullptr;
+    std::string piece_location = "";
+    char piece_file = '\0';
+	char piece_rank = '\0';
+    MoveResult result = MoveResult::Invalid_IllegalMovement;
+
+	// determine which king we need to look for
+	if (current_turn == WHITE_TURN)
+	{
+		// white turn means we need to check for black king
+		king_char = 'k';
+	}
+	else
+	{
+		// black turn means we need to check for white king
+		king_char = 'K';
+	}
+
+	// find the location of the king on the board
+	for (i = 0; i < BOARD_SIZE; i++)
+	{
+    	if (!found && state_of_board[i] == king_char)
+    	{
+        	file = 'a' + (i % 8);
+        	rank = '1' + (i / 8);
+
+        	king_location.clear();
+        	king_location += file;
+        	king_location += rank;
+
+        	found = true;
+    	}
+	}
+	
+	// now we have the location of the king we need to check if any of the opponent pieces can move to that location
+	for (i = 0; i < BOARD_SIZE; i++)
+	{
+		// check if there is a piece at this location
+		piece_char = state_of_board[i];
+		if (piece_char != EMPTY_SQUARE)
+		{
+			// check if the piece is an opponent piece
+			piece_is_white = (piece_char >= 'A' && piece_char <= 'Z');
+			if ((current_turn == WHITE_TURN && !piece_is_white) || (current_turn != WHITE_TURN && piece_is_white))
+			{
+				// create a temporary chess piece object based on the piece type
+				temp_piece = nullptr;
+				piece_file = 'a' + (i % 8);
+				piece_rank = '1' + (i / 8);
+				piece_location = "";
+				piece_location += piece_file;
+				piece_location += piece_rank;
+
+				switch (tolower(piece_char))
+				{
+					case 'r':
+						temp_piece = new rook(piece_location, !piece_is_white);
+						break;
+					case 'n':
+						//TODO temp_piece = new knight(piece_location, !piece_is_white);
+						break;
+					case 'b':
+						//TODO temp_piece = new bishop(piece_location, !piece_is_white);
+						break;
+					case 'q':
+						//TODO temp_piece = new queen(piece_location, !piece_is_white);
+						break;
+					case 'k':
+						//TODO temp_piece = new king(piece_location, !piece_is_white);
+						break;
+					case 'p':
+						//TODO temp_piece = new pawn(piece_location, !piece_is_white);
+						break;
+				}
+
+				if (temp_piece)
+				{
+					// set the destination to the king's location
+					temp_piece->set_destination(king_location);
+
+					// check if the move is valid
+					result = temp_piece->is_move_ok(state_of_board);
+					if (result == MoveResult::Valid || result == MoveResult::Valid_Check || result == MoveResult::Valid_Checkmate)
+					{
+						// clean up and return true since the king is in check
+						delete temp_piece;
+						return true;
+					}
+
+					// clean up
+					delete temp_piece;
+				}
+			}
+		}
+	}
+
+    // if we reach here the king is not in check
+    return false;
+}
+
+/*
+^   * fanction name:        knight::knight
+---------------------------------------------------------------------------------------
+    * fanction description: Initializes a knight chess piece with its starting location and color.
+    * fanction input:       const std::string& start_loc, bool is_it_white
+        - start_loc:        The starting location of the knight piece.
+        - is_it_white:      Indicates whether the piece is white (true) or black (false).
+    * fanction output:      void
+    * return value:         None.
+    * eficency:             O(1) - constant time complexity.
+---------------------------------------------------------------------------------------
+*/
+knight::knight(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_it_white) {}
+
+/*
+^   * fanction name:        bishop::bishop
+---------------------------------------------------------------------------------------
+    * fanction description: Initializes a bishop chess piece with its starting location and color.
+    * fanction input:       const std::string& start_loc, bool is_it_white
+        - start_loc:        The starting location of the bishop piece.
+        - is_it_white:      Indicates whether the piece is white (true) or black (false).
+    * fanction output:      void
+    * return value:         None.
+    * eficency:             O(1) - constant time complexity.
+---------------------------------------------------------------------------------------
+*/
+bishop::bishop(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_it_white) {}
+
+/*
+^   * fanction name:        queen::queen
+---------------------------------------------------------------------------------------
+    * fanction description: Initializes a queen chess piece with its starting location and color.
+    * fanction input:       const std::string& start_loc, bool is_it_white
+        - start_loc:        The starting location of the queen piece.
+        - is_it_white:      Indicates whether the piece is white (true) or black (false).
+    * fanction output:      void
+    * return value:         None.
+    * eficency:             O(1) - constant time complexity.
+---------------------------------------------------------------------------------------
+*/
+queen::queen(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_it_white) {}
+
+/*
+^   * fanction name:        pawn::pawn
+---------------------------------------------------------------------------------------
+    * fanction description: Initializes a pawn chess piece with its starting location and color.
+    * fanction input:       const std::string& start_loc, bool is_it_white
+        - start_loc:        The starting location of the pawn piece.
+        - is_it_white:      Indicates whether the piece is white (true) or black (false).
+    * fanction output:      void
+    * return value:         None.
+    * eficency:             O(1) - constant time complexity.
+---------------------------------------------------------------------------------------
+*/
+pawn::pawn(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_it_white) {}
+
+// --- Knight is_move_ok ---
+/*
+^   * function name:        knight::is_move_ok
+---------------------------------------------------------------------------------------
+    * function description: Determines if the proposed move for the Knight piece is valid based on the current state of the chess board.
+    * function input:       std::string state_of_board
+        - state_of_board:   The current state of the chess board.
+    * function output:      MoveResult
+    * return value:         An enumeration value indicating the result of the move validation.
+    * efficiency:           O(1) - constant time complexity (knight moves are fixed patterns).
+---------------------------------------------------------------------------------------
+*/
+MoveResult knight::is_move_ok(std::string state_of_board) 
+{
+    // !just shit to avoid gcc warnings
+    state_of_board[0] = state_of_board[2];
+    // TODO: Implement knight movement validation (L-shaped moves, can jump, etc.)
+    return MoveResult::Valid;  // Stub for now
+}
+
+// --- Bishop is_move_ok ---
+/*
+^   * function name:        bishop::is_move_ok
+---------------------------------------------------------------------------------------
+    * function description: Determines if the proposed move for the Bishop piece is valid based on the current state of the chess board.
+    * function input:       std::string state_of_board
+        - state_of_board:   The current state of the chess board.
+    * function output:      MoveResult
+    * return value:         An enumeration value indicating the result of the move validation.
+    * efficiency:           O(n) - linear time complexity, where n is the number of squares checked for path clearance.
+---------------------------------------------------------------------------------------
+*/
+MoveResult bishop::is_move_ok(std::string state_of_board) 
+{
+    // !just shit to avoid gcc warnings
+    state_of_board[0] = state_of_board[2];
+    // TODO: Implement bishop movement validation (diagonal moves, path must be clear)
+    return MoveResult::Valid;  // Stub for now
+}
+
+// --- Queen is_move_ok ---
+/*
+^   * function name:        queen::is_move_ok
+---------------------------------------------------------------------------------------
+    * function description: Determines if the proposed move for the Queen piece is valid based on the current state of the chess board.
+    * function input:       std::string state_of_board
+        - state_of_board:   The current state of the chess board.
+    * function output:      MoveResult
+    * return value:         An enumeration value indicating the result of the move validation.
+    * efficiency:           O(n) - linear time complexity, where n is the number of squares checked for path clearance.
+---------------------------------------------------------------------------------------
+*/
+MoveResult queen::is_move_ok(std::string state_of_board) 
+{
+    // !just shit to avoid gcc warnings
+    state_of_board[0] = state_of_board[2];
+    // TODO: Implement queen movement validation (combines rook + bishop, path must be clear)
+    return MoveResult::Valid;  // Stub for now
+}
+
+// --- Pawn is_move_ok ---
+/*
+^   * function name:        pawn::is_move_ok
+---------------------------------------------------------------------------------------
+    * function description: Determines if the proposed move for the Pawn piece is valid based on the current state of the chess board.
+    * function input:       std::string state_of_board
+        - state_of_board:   The current state of the chess board.
+    * function output:      MoveResult
+    * return value:         An enumeration value indicating the result of the move validation.
+    * efficiency:           O(1) - constant time complexity (pawn moves are limited).
+---------------------------------------------------------------------------------------
+*/
+MoveResult pawn::is_move_ok(std::string state_of_board) 
+{
+    // !just shit to avoid gcc warnings
+    state_of_board[0] = state_of_board[2];
+    // TODO: Implement pawn movement validation (forward moves, captures, en passant, promotion)
+    return MoveResult::Valid;  // Stub for now
+}
 
 /*
 ^   * fanction name:        king::is_move_ok
