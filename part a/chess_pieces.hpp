@@ -69,6 +69,21 @@ public:
 	MoveResult is_move_ok(std::string state_of_board ) override;    
 };     
 
+class queen : public chess_p
+{
+private:
+    // Private member variables
+
+public:
+	// Public methods
+    // -- Constructor --//
+	queen(std::string start_loc, bool is_it_white);
+
+    // --- Override Methods --- //
+
+	MoveResult is_move_ok(std::string state_of_board ) override;
+};
+
 #endif // CHESS_PIECES_HPP
 
 
