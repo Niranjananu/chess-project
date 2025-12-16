@@ -48,6 +48,22 @@ public:
     MoveResult is_move_ok(std::string state_of_board ) override; // state_of_board: current state of the chess board
 };
 
+
+class knigh : public chess_p   
+{    
+private:
+    // Private member variables
+
+public:     
+	// Public methods
+    // -- Constructor --//
+	knigh(std::string start_loc, bool is_it_white);    
+
+    // --- Override Methods --- //
+
+	MoveResult is_move_ok(std::string state_of_board ) override;    
+};     
+
 #endif // CHESS_PIECES_HPP
 
 
