@@ -3,7 +3,6 @@
 
 #include <iostream>          // for std::string and other I/O operations
 #include "chess_pieces.hpp"  // include chess pieces definitions
-#include "class_chess_p.hpp" // include base chess piece class definition and enums + constants
 
 constexpr int BOARD_SIZE_UP = 8;   // Number of squares along one side of the chess board
 constexpr int BOARD_SIZE_RIGHT = 8; // Number of squares along the other side of the chess board

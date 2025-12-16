@@ -1,6 +1,5 @@
 #include <iostream>
-#include "class_chess_p.hpp"
-#include "chess_pieces.hpp"
+#include "board.hpp"
 
 int main() {
     std::cout << "Chess pieces module loaded successfully." << std::endl;
