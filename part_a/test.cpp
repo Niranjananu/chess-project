@@ -157,8 +157,6 @@ void test_king()
 
 void test_rook_and_king()
 {
-    void test_rook_and_king()
-{
     // setup: white pieces
     king w_king("a1", true);
     rook w_rook1("a4", true);
@@ -336,6 +334,5 @@ void test_rook_and_king()
     std::cout << "Black rook2: " << b_rook2.give_location() << std::endl;
 
     std::cout << std::endl;
-}
 }
 
