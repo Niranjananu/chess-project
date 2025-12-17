@@ -228,7 +228,7 @@ void test_rook_and_king()
         board[60] = '#';  // e8
         board[59] = 'k';  // d8
         board.back() = '0'; // white to move
-        std::cout << "good\n";
+        std::cout << "Black king e8 -> d8 : good\n";
     }    
     else 
     {
