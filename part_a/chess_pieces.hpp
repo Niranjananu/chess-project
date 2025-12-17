@@ -25,7 +25,7 @@ public:
 
     // --- Override Methods --- //
 
-    MoveResult is_move_ok(std::string state_of_board ) override; // state_of_board: current state of the chess board
+    MoveResult is_move_ok(std::string state_of_board, bool check_for_check = true) override;// state_of_board: current state of the chess board
 };
 
 /*
@@ -47,7 +47,7 @@ public:
 
     // --- Override Methods --- //
 
-    MoveResult is_move_ok(std::string state_of_board ) override; // state_of_board: current state of the chess board
+    MoveResult is_move_ok(std::string state_of_board, bool check_for_check = true) override; // state_of_board: current state of the chess board
 };
 
 /*
@@ -67,7 +67,7 @@ public:
 
     // --- Override Methods --- //
 
-    MoveResult is_move_ok(std::string state_of_board ) override;
+    MoveResult is_move_ok(std::string state_of_board, bool check_for_check = true) override;
 };
 
 /*
@@ -88,7 +88,7 @@ public:
 
     // --- Override Methods --- //
 
-	MoveResult is_move_ok(std::string state_of_board ) override;    
+	MoveResult is_move_ok(std::string state_of_board, bool check_for_check = true) override;    
 };     
 
 /*
@@ -109,7 +109,7 @@ public:
 
     // --- Override Methods --- //
 
-	MoveResult is_move_ok(std::string state_of_board ) override;
+	MoveResult is_move_ok(std::string state_of_board, bool check_for_check = true) override;
 };
 
 /*
@@ -129,7 +129,7 @@ public:
 
     // --- Override Methods --- //
 
-    MoveResult is_move_ok(std::string state_of_board ) override;
+    MoveResult is_move_ok(std::string state_of_board, bool check_for_check = true) override;
 };
 
 #endif // CHESS_PIECES_HPP

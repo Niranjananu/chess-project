@@ -28,7 +28,7 @@ rook::rook(const std::string& start_loc, bool is_it_white) : chess_p(start_loc, 
     * eficency:             O(n) - linear time complexity, where n is the number of squares checked for path clearance.
 ---------------------------------------------------------------------------------------
 */
-MoveResult rook::is_move_ok(std::string state_of_board)
+MoveResult rook::is_move_ok(std::string state_of_board, bool check_for_check = true)
 {
     /*
     Valid = 0,
@@ -147,6 +147,10 @@ MoveResult rook::is_move_ok(std::string state_of_board)
         return MoveResult::Invalid_IllegalMovement;
     }
 
+    if(!check_for_check)
+    {
+        return MoveResult::Valid;
+    }
     // code number 4
     // check for self-check
     // make a copy of how the board would look after the move
@@ -276,6 +280,11 @@ bool is_there_check(std::string state_of_board)
         	found = true;
     	}
 	}
+
+    if (!found)
+    {
+        return false;
+    }
 	
 	// now we have the location of the king we need to check if any of the opponent pieces can move to that location
 	for (i = 0; i < BOARD_SIZE; i++)
@@ -354,7 +363,7 @@ bool is_there_check(std::string state_of_board)
     * eficency:             O(n) - linear time complexity, where n is the number of squares checked for path clearance.
 ---------------------------------------------------------------------------------------
 */
-MoveResult king::is_move_ok(std::string state_of_board )
+MoveResult king::is_move_ok(std::string state_of_board, bool check_for_check = true)
 {
     /*
     Valid = 0,
@@ -447,6 +456,11 @@ MoveResult king::is_move_ok(std::string state_of_board )
     if (source_index < 0 || source_index >= BOARD_SIZE || dest_index < 0 || dest_index >= BOARD_SIZE)
     {
         return MoveResult::Invalid_IndexOutOfRange;
+    }
+
+    if(!check_for_check)
+    {
+        return result;
     }
 
     // code number 4
@@ -573,10 +587,11 @@ pawn::pawn(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_it_w
     * efficiency:           O(1) - constant time complexity (knight moves are fixed patterns).
 ---------------------------------------------------------------------------------------
 */
-MoveResult knight::is_move_ok(std::string state_of_board) 
+MoveResult knight::is_move_ok(std::string state_of_board, bool check_for_check = true)
 {
     // !just shit to avoid gcc warnings
     state_of_board[0] = state_of_board[2];
+    check_for_check = false;
     // TODO: Implement knight movement validation (L-shaped moves, can jump, etc.)
     return MoveResult::Valid;  // Stub for now
 }
@@ -593,10 +608,11 @@ MoveResult knight::is_move_ok(std::string state_of_board)
     * efficiency:           O(n) - linear time complexity, where n is the number of squares checked for path clearance.
 ---------------------------------------------------------------------------------------
 */
-MoveResult bishop::is_move_ok(std::string state_of_board) 
+MoveResult bishop::is_move_ok(std::string state_of_board, bool check_for_check = true)
 {
     // !just shit to avoid gcc warnings
     state_of_board[0] = state_of_board[2];
+    check_for_check = false;
     // TODO: Implement bishop movement validation (diagonal moves, path must be clear)
     return MoveResult::Valid;  // Stub for now
 }
@@ -613,10 +629,11 @@ MoveResult bishop::is_move_ok(std::string state_of_board)
     * efficiency:           O(n) - linear time complexity, where n is the number of squares checked for path clearance.
 ---------------------------------------------------------------------------------------
 */
-MoveResult queen::is_move_ok(std::string state_of_board) 
+MoveResult queen::is_move_ok(std::string state_of_board, bool check_for_check = true)
 {
     // !just shit to avoid gcc warnings
     state_of_board[0] = state_of_board[2];
+    check_for_check = false;
     // TODO: Implement queen movement validation (combines rook + bishop, path must be clear)
     return MoveResult::Valid;  // Stub for now
 }
@@ -633,10 +650,11 @@ MoveResult queen::is_move_ok(std::string state_of_board)
     * efficiency:           O(1) - constant time complexity (pawn moves are limited).
 ---------------------------------------------------------------------------------------
 */
-MoveResult pawn::is_move_ok(std::string state_of_board) 
+MoveResult pawn::is_move_ok(std::string state_of_board, bool check_for_check = true)
 {
     // !just shit to avoid gcc warnings
     state_of_board[0] = state_of_board[2];
+    check_for_check = false;
     // TODO: Implement pawn movement validation (forward moves, captures, en passant, promotion)
     return MoveResult::Valid;  // Stub for now
 }

@@ -65,7 +65,7 @@ public:
 
     // --- Virtual Methods --- //
 
-    virtual MoveResult is_move_ok(std::string state_of_board ) = 0; // state_of_board: current state of the chess board
+    virtual MoveResult is_move_ok(std::string state_of_board, bool check_for_check = true) = 0; // state_of_board: current state of the chess board
 
 };
 
