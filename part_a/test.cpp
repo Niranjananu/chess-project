@@ -7,7 +7,7 @@ void test_bishop();
 void test_queen();
 void test_pawn();
 void test_king();
-
+ 
 int main() 
 {
     std::cout << "Chess pieces module loaded successfully." << std::endl;
