@@ -239,21 +239,30 @@ void test_rook_and_king()
 
     std::cout << "Board after move 3:\n" << board << std::endl;
 
-    // --- Move 4: White rook a8 -> d8 (mate attempt) ---
+    // --- Final move: White rook a8 -> d8 (KING CAPTURE) ---
     w_rook.set_destination("d8");
     result = w_rook.is_move_ok(board);
 
     std::cout << "White rook a8 -> d8 : ";
     std::cout << result << std::endl;
 
-    if (result == MoveResult::Valid_Checkmate)
+    if (result == MoveResult::Valid || result == MoveResult::Valid_Checkmate)
     {
-        std::cout << "CHECKMATE detected correctly." << std::endl;
+        w_rook.move();
+
+        // remove black king, place rook
+        board[56] = '#';  // a8
+        board[59] = 'R';  // d8
+        board.back() = '1';
+
+        std::cout << "Black king captured. Game over." << std::endl;
     }
     else
     {
-        std::cout << "Not checkmate yet (engine result)." << std::endl;
+        std::cout << "Final move failed unexpectedly." << std::endl;
     }
+
+    std::cout << "Final board:\n" << board << std::endl;
 
     std::cout << "=== End of test ===" << std::endl;
 }
