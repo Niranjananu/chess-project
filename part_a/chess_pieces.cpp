@@ -1,8 +1,8 @@
 // filepath: chess_project\part a\chess_pieces.cpp
 
-#include "chess_pieces.hpp"
-
-// --- Rook Constructor --- //
+#include "chess_pieces.hpp" 
+ 
+// --- Rook Constructor --- // 
 /*
 ^   * fanction name:        rook::rook
 ---------------------------------------------------------------------------------------
