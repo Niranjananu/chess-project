@@ -94,3 +94,6 @@ void test_king()
 {
 
 }
+
+
+
