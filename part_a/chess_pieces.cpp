@@ -346,7 +346,7 @@ bool is_there_check(std::string state_of_board)
                         return true;
                     }
 
-                    delete temp_piece;
+                    delete temp_piece;   
                 }
             }
         }

@@ -29,7 +29,7 @@ chess_p::chess_p(std::string loc, bool is_it_white)
     * fanction input:       None
     * fanction output:      bool
     * return value:         True if the piece is white, false otherwise.
-    * eficency:             O(1) - constant time complexity.
+    * eficency:             O(1) - constant time complexity.    
 ---------------------------------------------------------------------------------------
 */
 bool chess_p::get_is_white()

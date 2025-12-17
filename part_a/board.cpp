@@ -24,7 +24,7 @@ board::board()
     chess_board[0][3] = new queen("d1", true);   // White Queen
     chess_board[0][4] = new king("e1", true);    // White King
     chess_board[0][5] = new bishop("f1", true);  // White Bishop
-    chess_board[0][6] = new knight("g1", true);  // White Knight
+    chess_board[0][6] = new knight("g1", true);  // White Knight    
     chess_board[0][7] = new rook("h1", true);    // White Rook
     
     // White pawns at rank 2 (row 1)

@@ -117,7 +117,7 @@ void test_king()
         std::cout << "king move validation passed." << std::endl;
     }
     else
-    {
+    {   
         std::cout << "got: " << std::endl;
         std::cout << result << std::endl;
         std::cout << "king move validation failed." << std::endl;

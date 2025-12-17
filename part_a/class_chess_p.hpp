@@ -31,7 +31,7 @@ constexpr char BLACK_TURN = '1';                         // if not white then bl
 // This class serves as a base class for all chess pieces
 // It contains common attributes and methods that all chess pieces share
 // --- Class Definition --- //
-*/
+*/    
 class chess_p 
 { 
 private:
