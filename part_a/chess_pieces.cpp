@@ -333,7 +333,7 @@ bool is_there_check(std::string state_of_board)
 					temp_piece->set_destination(king_location);
 
 					// check if the move is valid
-					result = temp_piece->is_move_ok(state_of_board);
+					result = temp_piece->is_move_ok(state_of_board , false);
 					if (result == MoveResult::Valid || result == MoveResult::Valid_Check || result == MoveResult::Valid_Checkmate)
 					{
 						// clean up and return true since the king is in check
