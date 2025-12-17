@@ -5,7 +5,7 @@ void test_rook();
 void test_knight();
 void test_bishop();
 void test_queen();
-void test_pawn();
+void test_pawn(); 
 void test_king();  
  
 int main() 
