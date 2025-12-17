@@ -151,7 +151,7 @@ MoveResult rook::is_move_ok(std::string state_of_board, bool check_for_check)
     {
         return MoveResult::Valid;
     }
-    
+
     // Check for self-check (DON'T switch turn)
     new_state_of_board = state_of_board;
     new_state_of_board[dest_index] = new_state_of_board[source_index];
@@ -242,124 +242,120 @@ king::king(const std::string& start_loc, bool is_it_white) : chess_p(start_loc, 
 */
 bool is_there_check(std::string state_of_board)
 {
-	// first we need to get whos turn it is
-	// it is in the last character of state_of_board
-	char current_turn = state_of_board[BOARD_STATE_LENGTH - 1];// we have 65 characters 0-63 for the board and 64 for the turn and 65 is the null terminator
-	char king_char = '\0';
-	std::string king_location = "";
-	int i = 0;
-	bool found = false;
-	char file = '\0';
+    // Get whose turn it is
+    char current_turn = state_of_board[BOARD_STATE_LENGTH - 1];
+    char king_char = '\0';
+    std::string king_location = "";
+    int i = 0;
+    bool found = false;
+    char file = '\0';
     char rank = '\0';
-	char piece_char = '\0';
+    char piece_char = '\0';
     bool piece_is_white = false;
     chess_p* temp_piece = nullptr;
     std::string piece_location = "";
     char piece_file = '\0';
-	char piece_rank = '\0';
+    char piece_rank = '\0';
     MoveResult result = MoveResult::Invalid_IllegalMovement;
 
-	// determine which king we need to look for
-	if (current_turn == WHITE_TURN)
-	{
-		// white turn means we need to check for black king
-		king_char = 'k';
-	}
-	else if (current_turn == BLACK_TURN)
-	{
-		// black turn means we need to check for white king
-		king_char = 'K';
-	}
+    // FIXED: If it's WHITE's turn, check if WHITE's king is in danger
+    // If it's BLACK's turn, check if BLACK's king is in danger
+    if (current_turn == WHITE_TURN)
+    {
+        king_char = 'K';  // Check WHITE king (uppercase)
+    }
+    else if (current_turn == BLACK_TURN)
+    {
+        king_char = 'k';  // Check BLACK king (lowercase)
+    }
     else
     {
-        std::cout << "f you you shit!!!";
+        std::cout << "Invalid turn indicator!" << std::endl;
         return true;
     }
 
-	// find the location of the king on the board
-	for (i = 0; i < BOARD_SIZE; i++)
-	{
-    	if (!found && state_of_board[i] == king_char)
-    	{
-        	file = 'a' + (i % 8);
-        	rank = '1' + (i / 8);
+    // Find the king's location
+    for (i = 0; i < BOARD_SIZE; i++)
+    {
+        if (!found && state_of_board[i] == king_char)
+        {
+            file = 'a' + (i % 8);
+            rank = '1' + (i / 8);
 
-        	king_location.clear();
-        	king_location += file;
-        	king_location += rank;
+            king_location.clear();
+            king_location += file;
+            king_location += rank;
 
-        	found = true;
-    	}
-	}
+            found = true;
+        }
+    }
 
     if (!found)
     {
-        return false;
+        return false;  // King not found (captured)
     }
-	
-	// now we have the location of the king we need to check if any of the opponent pieces can move to that location
-	for (i = 0; i < BOARD_SIZE; i++)
-	{
-		// check if there is a piece at this location
-		piece_char = state_of_board[i];
-		if (piece_char != EMPTY_SQUARE)
-		{
-			// check if the piece is an opponent piece
-			piece_is_white = (piece_char >= 'A' && piece_char <= 'Z');
-			if ((current_turn == WHITE_TURN && !piece_is_white) || (current_turn != WHITE_TURN && piece_is_white))
-			{
-				// create a temporary chess piece object based on the piece type
-				temp_piece = nullptr;
-				piece_file = 'a' + (i % 8);
-				piece_rank = '1' + (i / 8);
-				piece_location = "";
-				piece_location += piece_file;
-				piece_location += piece_rank;
+    
+    // Check if any OPPONENT piece can attack this king
+    for (i = 0; i < BOARD_SIZE; i++)
+    {
+        piece_char = state_of_board[i];
+        if (piece_char != EMPTY_SQUARE)
+        {
+            piece_is_white = (piece_char >= 'A' && piece_char <= 'Z');
+            
+            // FIXED: Look for opponent pieces
+            // If checking WHITE's king, look for BLACK pieces (and vice versa)
+            if ((current_turn == WHITE_TURN && !piece_is_white) || (current_turn == BLACK_TURN && piece_is_white))
+            {
+                temp_piece = nullptr;
+                piece_file = 'a' + (i % 8);
+                piece_rank = '1' + (i / 8);
+                piece_location = "";
+                piece_location += piece_file;
+                piece_location += piece_rank;
 
-				switch (tolower(piece_char))
-				{
-					case 'r':
-						temp_piece = new rook(piece_location, !piece_is_white);
-						break;
-					case 'n':
-						//TODO temp_piece = new knight(piece_location, !piece_is_white);
-						break;
-					case 'b':
-						//TODO temp_piece = new bishop(piece_location, !piece_is_white);
-						break;
-					case 'q':
-						//TODO temp_piece = new queen(piece_location, !piece_is_white);
-						break;
-					case 'k':
-						temp_piece = new king(piece_location, !piece_is_white);
-						break;
-					case 'p':
-						//TODO temp_piece = new pawn(piece_location, !piece_is_white);
-						break;
-				}
+                switch (tolower(piece_char))
+                {
+                    case 'r':
+                        temp_piece = new rook(piece_location, piece_is_white);
+                        break;
+                    case 'n':
+                        //TODO temp_piece = new knight(piece_location, piece_is_white);
+                        break;
+                    case 'b':
+                        //TODO temp_piece = new bishop(piece_location, piece_is_white);
+                        break;
+                    case 'q':
+                        //TODO temp_piece = new queen(piece_location, piece_is_white);
+                        break;
+                    case 'k':
+                        temp_piece = new king(piece_location, piece_is_white);
+                        break;
+                    case 'p':
+                        //TODO temp_piece = new pawn(piece_location, piece_is_white);
+                        break;
+                }
 
-				if (temp_piece)
-				{
-					// set the destination to the king's location
-					temp_piece->set_destination(king_location);
+                if (temp_piece)
+                {
+                    temp_piece->set_destination(king_location);
+                    
+                    // Check if this piece can attack the king (don't recurse)
+                    result = temp_piece->is_move_ok(state_of_board, false);
+                    if (result == MoveResult::Valid || 
+                        result == MoveResult::Valid_Check || 
+                        result == MoveResult::Valid_Checkmate)
+                    {
+                        delete temp_piece;
+                        return true;
+                    }
 
-					// check if the move is valid
-					result = temp_piece->is_move_ok(state_of_board , false);
-					if (result == MoveResult::Valid || result == MoveResult::Valid_Check || result == MoveResult::Valid_Checkmate)
-					{
-						// clean up and return true since the king is in check
-						delete temp_piece;
-						return true;
-					}
+                    delete temp_piece;
+                }
+            }
+        }
+    }
 
-					// clean up
-					delete temp_piece;
-				}
-			}
-		}
-	}
-
-    // if we reach here the king is not in check
     return false;
 }
  

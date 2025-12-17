@@ -163,20 +163,26 @@ void test_rook_and_king()
 {
     std::cout << "=== Rook + King endgame test ===" << std::endl;
 
-    // Initial board:
-    // White: King e1, Rook a1
-    // Black: King e8
-    // White to move
+    // Board layout:
+    // Indices 0-7   = rank 8
+    // Indices 8-15  = rank 7
+    // Indices 16-23 = rank 6
+    // Indices 24-31 = rank 5
+    // Indices 32-39 = rank 4
+    // Indices 40-47 = rank 3
+    // Indices 48-55 = rank 2
+    // Indices 56-63 = rank 1
+
     std::string board =
-        "####k###"   // rank 8 (indices 0-7)
-        "########"   // rank 7
-        "########"   // rank 6
-        "########"   // rank 5
-        "########"   // rank 4
-        "########"   // rank 3
-        "########"   // rank 2
-        "R###K###"   // rank 1 (indices 56-63)
-        "0";         // white to move     // white to move
+        "####k###"   // rank 8 (0-7): black king on e8 (index 4)
+        "########"   // rank 7 (8-15)
+        "########"   // rank 6 (16-23)
+        "########"   // rank 5 (24-31)
+        "########"   // rank 4 (32-39)
+        "########"   // rank 3 (40-47)
+        "########"   // rank 2 (48-55)
+        "R###K###"   // rank 1 (56-63): white rook on a1 (56), white king on e1 (60)
+        "0";         // white to move
 
     king w_king("e1", true);
     rook w_rook("a1", true);
@@ -184,177 +190,63 @@ void test_rook_and_king()
 
     std::cout << "Initial board:\n" << board << std::endl;
 
-    // --- Move 1: White rook a1 -> a8 (check) ---
+    // Move 1: White rook a1 -> a8
     w_rook.set_destination("a8");
     MoveResult result = w_rook.is_move_ok(board);
 
-    std::cout << "White rook a1 -> a8 : ";
-    std::cout << result << std::endl;
-
-    if (result == MoveResult::Valid_Check)
-    {
-        w_rook.move();
-
-        // update board
-        board[0] = '#';    // a1
-        board[56] = 'R';   // a8
-        board.back() = '1'; // black to move
-        std::cout << "good\n";
+    std::cout << "White rook a1 -> a8: " << result;
+    if (result == MoveResult::Valid_Check) {
+        std::cout << " (Valid_Check - PASS)" << std::endl;
+    } else {
+        std::cout << " (Expected Valid_Check=1, FAIL)" << std::endl;
     }
-    else 
-    {
-        w_rook.move();
 
-        // update board
-        board[0] = '#';    // a1
-        board[56] = 'R';   // a8
-        board.back() = '1'; // black to move
-        std::cout << "White rook a1 -> a8 didnt get  : MoveResult::Valid_Check it got (1):  " << result <<"\n";
-    }
+    // Update board manually
+    board[56] = '#';   // Clear a1
+    board[0] = 'R';    // Place rook at a8
+    board[64] = '1';   // Black to move
+    w_rook.move();
 
     std::cout << "Board after move 1:\n" << board << std::endl;
 
-    // --- Move 2: Black king e8 -> d8 ---
+    // Move 2: Black king e8 -> d8 (should be Invalid_SelfCheck)
     b_king.set_destination("d8");
     result = b_king.is_move_ok(board);
 
-    std::cout << "Black king e8 -> d8 : " <<"\n";
-    std::cout << result << std::endl;
+    std::cout << "Black king e8 -> d8: " << result;
+    if (result == MoveResult::Invalid_SelfCheck) {
+        std::cout << " (Invalid_SelfCheck - PASS)" << std::endl;
+    } else {
+        std::cout << " (Expected Invalid_SelfCheck=4, FAIL)" << std::endl;
+    }
 
-    if (result == MoveResult::Invalid_SelfCheck)
-    {
+    // Move 2 alternative: Black king e8 -> f8
+    b_king.set_destination("f8");
+    result = b_king.is_move_ok(board);
+
+    std::cout << "Black king e8 -> f8: " << result;
+    if (result == MoveResult::Valid) {
+        std::cout << " (Valid - PASS)" << std::endl;
+        board[4] = '#';    // Clear e8
+        board[5] = 'k';    // Place king at f8
+        board[64] = '0';   // White to move
         b_king.move();
-
-        board[60] = '#';  // e8
-        board[59] = 'k';  // d8
-        board.back() = '0'; // white to move
-        std::cout << "Black king e8 -> d8 : good\n";
-    }    
-    else 
-    {
-        b_king.move();
-
-        board[60] = '#';  // e8
-        board[59] = 'k';  // d8
-        board.back() = '0'; // white to move
-        std::cout << "Black king e8 -> d8 didnt get: MoveResult::Invalid_SelfCheck it got:  " << result <<"\n";;
+    } else {
+        std::cout << " (Expected Valid=0, FAIL)" << std::endl;
     }
 
     std::cout << "Board after move 2:\n" << board << std::endl;
 
-    // --- Move 3: White king e1 -> d2 ---
-    w_king.set_destination("d2");
-    result = w_king.is_move_ok(board);
-
-    std::cout << "White king e1 -> d2 : ";
-    std::cout << result << std::endl;
-
-    if (result == MoveResult::Valid_Check)
-    {
-        w_king.move();
-
-        board[4] = '#';    // e1
-        board[11] = 'K';   // d2
-        board.back() = '1'; // black to move
-        std::cout << "good\n";
-    }
-    else 
-    {
-        w_king.move();
-
-        board[4] = '#';    // e1
-        board[11] = 'K';   // d2
-        board.back() = '1'; // black to move
-        std::cout << "White king e1 -> d2 didnt get: MoveResult::Valid_Check becouse the king is still in denger from the rook it got:" << result <<"\n";
-    }
-
-    std::cout << "Board after move 3:\n" << board << std::endl;
-
-    // --- Final move: White rook a8 -> d8 (KING CAPTURE) ---
-    w_rook.set_destination("d8");
+    // Move 3: White rook a8 -> f8 (captures king)
+    w_rook.set_destination("f8");
     result = w_rook.is_move_ok(board);
 
-    std::cout << "White rook a8 -> d8 : ";
-    std::cout << result << std::endl;
-
-    if (result == MoveResult::Valid_Checkmate)
-    {
-        w_rook.move();
-
-        // remove black king, place rook
-        board[56] = '#';  // a8
-        board[59] = 'R';  // d8
-        board.back() = '1';
-
-        std::cout << "Black king captured. Game over." << std::endl;
+    std::cout << "White rook a8 -> f8: " << result;
+    if (result == MoveResult::Valid_Checkmate) {
+        std::cout << " (Valid_Checkmate - PASS)" << std::endl;
+    } else {
+        std::cout << " (Expected Valid_Checkmate=8, FAIL)" << std::endl;
     }
-    else
-    {
-        w_rook.move();
-
-        // remove black king, place rook
-        board[56] = '#';  // a8
-        board[59] = 'R';  // d8
-        board.back() = '1';
-
-        std::cout << "Final move failed unexpectedly." << std::endl;
-        std::cout << "White rook a8 -> d8 didnt get: MoveResult::Valid_Checkmate it got:" << result <<"\n";;
-    }
-    w_rook.move();
-
-    if (result == MoveResult::Valid_Checkmate)
-    {
-        w_rook.move();
-
-        // remove black king, place rook
-        board[56] = '#';  // a8
-        board[59] = 'R';  // d8
-        board.back() = '1';
-
-        std::cout << "if you see this Valid_Checkmate is delayed by 1 or so rounds." << std::endl;
-    }
-
-    // remove black king, place rook
-    board[56] = '#';  // a8
-    board[59] = 'R';  // d8
-    board.back() = '1';
-    w_rook.set_destination("d1");
-    result = w_rook.is_move_ok(board);
-    if (result == MoveResult::Valid_Checkmate)
-    {
-        w_rook.move();
-
-        // remove black king, place rook
-        board[56] = '#';  // a8
-        board[59] = 'R';  // d8
-        board.back() = '1';
-
-        std::cout << "if you see this Valid_Checkmate is delayed by 1 or so rounds." << std::endl;
-    }
-
-    if (w_rook.is_move_ok(board) == MoveResult::Valid_Checkmate)
-    {
-        w_rook.move();
-
-        // remove black king, place rook
-        board[56] = '#';  // a8
-        board[59] = 'R';  // d8
-        board.back() = '1';
-
-        std::cout << "if you see this Valid_Checkmate is delayed by 1 or so rounds." << std::endl;
-    }
-
-    std::string temp = w_rook.get_destination();
-    std::string temp2 = w_rook.give_location();
-
-    std::cout << temp << temp2 << std::endl;
-
-    temp = w_king.get_destination();
-    temp2 = w_king.give_location();
-
-    std::cout << temp << temp2 << std::endl;
-
-    std::cout << "Final board:\n" << board << std::endl;
 
     std::cout << "=== End of test ===" << std::endl;
 }
