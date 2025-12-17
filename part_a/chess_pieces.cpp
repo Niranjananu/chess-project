@@ -151,34 +151,33 @@ MoveResult rook::is_move_ok(std::string state_of_board, bool check_for_check)
     {
         return MoveResult::Valid;
     }
-    // code number 4
-    // check for self-check
-    // make a copy of how the board would look after the move
+    
+    // Check for self-check (DON'T switch turn)
     new_state_of_board = state_of_board;
-    new_state_of_board[dest_index] = new_state_of_board[source_index]; // Move piece to destination
-    new_state_of_board[source_index] = EMPTY_SQUARE;                   // Empty the source square
-    if (turn == WHITE_TURN)
-    {
-        new_state_of_board[BOARD_STATE_LENGTH - 1] = BLACK_TURN;
-    } 
-    else
-    {
-        new_state_of_board[BOARD_STATE_LENGTH - 1] = WHITE_TURN;
-    }      
+    new_state_of_board[dest_index] = new_state_of_board[source_index];
+    new_state_of_board[source_index] = EMPTY_SQUARE;
+    // KEEP the same turn to check OUR king
+    new_state_of_board[BOARD_STATE_LENGTH - 1] = turn;
+
     if (is_there_check(new_state_of_board))
     {
         return MoveResult::Invalid_SelfCheck;
     }
-    // this makes sure that the move does not put own king in check or if it was already in check it makes sure the move gets the king out of check
 
-    // If all checks passed, the move is valid
-    // now we need to check if the move results in a check or checkmate
-    // we can use the is_there_check function again
+    // Check if opponent is in check (DO switch turn)
     new_state_of_board = state_of_board;
-    new_state_of_board[dest_index] = new_state_of_board[source_index]; // Move piece to destination
-    new_state_of_board[source_index] = EMPTY_SQUARE;                   // Empty the source square]
-    new_state_of_board[BOARD_STATE_LENGTH - 1] = turn;
-    // Check if the move puts the opponent in check
+    new_state_of_board[dest_index] = new_state_of_board[source_index];
+    new_state_of_board[source_index] = EMPTY_SQUARE;
+    // SWITCH turn to check OPPONENT's king
+    if (turn == WHITE_TURN) 
+    {
+        new_state_of_board[BOARD_STATE_LENGTH - 1] = BLACK_TURN;
+    } 
+    else 
+    {
+        new_state_of_board[BOARD_STATE_LENGTH - 1] = WHITE_TURN;
+    }
+
     if (is_there_check(new_state_of_board))
     {
         return MoveResult::Valid_Check;
@@ -475,44 +474,39 @@ MoveResult king::is_move_ok(std::string state_of_board, bool check_for_check)
         return result;
     }
 
-    // code number 4
-    // check for self-check
-    // make a copy of how the board would look after the move
+    // Check for self-check (DON'T switch turn)
     new_state_of_board = state_of_board;
-    new_state_of_board[dest_index] = new_state_of_board[source_index]; // Move piece to destination
-    new_state_of_board[source_index] = EMPTY_SQUARE;                   // Empty the source square
-    if (turn == WHITE_TURN)
-    {
-        new_state_of_board[BOARD_STATE_LENGTH - 1] = BLACK_TURN;
-    } 
-    else
-    {
-        new_state_of_board[BOARD_STATE_LENGTH - 1] = WHITE_TURN;
-    }   
+    new_state_of_board[dest_index] = new_state_of_board[source_index];
+    new_state_of_board[source_index] = EMPTY_SQUARE;
+    // KEEP the same turn to check OUR king
+    new_state_of_board[BOARD_STATE_LENGTH - 1] = turn;
+
     if (is_there_check(new_state_of_board))
     {
-        result =  MoveResult::Invalid_SelfCheck;
+        return MoveResult::Invalid_SelfCheck;
     }
-    // this makes sure that the move does not put own king in check or if it was already in check it makes sure the move gets the king out of check
 
+    // Check if opponent is in check (DO switch turn)
     new_state_of_board = state_of_board;
-    new_state_of_board[dest_index] = new_state_of_board[source_index]; // Move piece to destination
-    new_state_of_board[source_index] = EMPTY_SQUARE;                   // Empty the source square
-    new_state_of_board[BOARD_STATE_LENGTH - 1] = turn;
+    new_state_of_board[dest_index] = new_state_of_board[source_index];
+    new_state_of_board[source_index] = EMPTY_SQUARE;
+    // SWITCH turn to check OPPONENT's king
+    if (turn == WHITE_TURN) 
+    {
+        new_state_of_board[BOARD_STATE_LENGTH - 1] = BLACK_TURN;
+    }    
+    else 
+    {
+        new_state_of_board[BOARD_STATE_LENGTH - 1] = WHITE_TURN;
+    }
+
+    if (is_there_check(new_state_of_board))
+    {
+        return MoveResult::Valid_Check;
+    }
+
     if(result == MoveResult::Valid)
     {
-        // If all checks passed, the move is valid
-        // now we need to check if the move results in a check or checkmate
-        // we can use the is_there_check function again
-        new_state_of_board = state_of_board;
-        new_state_of_board[dest_index] = new_state_of_board[source_index]; // Move piece to destination
-        new_state_of_board[source_index] = EMPTY_SQUARE;                   // Empty the source square
-        // Check if the move puts the opponent in check
-        if (is_there_check(new_state_of_board))
-        {
-            result = MoveResult::Valid_Check;
-        }
-
         // Check if opponent's king is on the board
         king_exists = false;
         for (i = 0; i < BOARD_SIZE; i++)

@@ -168,15 +168,15 @@ void test_rook_and_king()
     // Black: King e8
     // White to move
     std::string board =
-        "R###K###"   // rank 1
-        "########"  // rank 2
-        "########"  // rank 3
-        "########"  // rank 4
-        "########"  // rank 5
-        "########"  // rank 6
-        "########"  // rank 7
-        "####k###"  // rank 8
-        "0";        // white to move
+        "####k###"   // rank 8 (indices 0-7)
+        "########"   // rank 7
+        "########"   // rank 6
+        "########"   // rank 5
+        "########"   // rank 4
+        "########"   // rank 3
+        "########"   // rank 2
+        "R###K###"   // rank 1 (indices 56-63)
+        "0";         // white to move     // white to move
 
     king w_king("e1", true);
     rook w_rook("a1", true);
