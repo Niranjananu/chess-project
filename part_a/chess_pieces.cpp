@@ -243,68 +243,116 @@ king::king(const std::string& start_loc, bool is_it_white) : chess_p(start_loc, 
 bool is_there_check(std::string state_of_board)
 {
     char current_turn = state_of_board[BOARD_STATE_LENGTH - 1];
-    char king_char = (current_turn == WHITE_TURN) ? 'K' : 'k'; // King's character based on the turn
+    char king_char = '\0';
     std::string king_location = "";
-    int king_index = -1;
+    int i = 0;
+    bool found = false;
+    char file = '\0';
+    char rank = '\0';
+    char piece_char = '\0';
+    bool piece_is_white = false;
+    chess_p* temp_piece = nullptr;
+    std::string piece_location = "";
+    char piece_file = '\0';
+    char piece_rank = '\0';
+    MoveResult result = MoveResult::Invalid_IllegalMovement;
 
-    // STEP 1: Find the King's location
-    for (int i = 0; i < BOARD_SIZE; ++i) 
+    // FIXED: If it's WHITE's turn, check if WHITE's king is in danger
+    if (current_turn == WHITE_TURN)
     {
-        if (state_of_board[i] == king_char) 
+        king_char = 'K';  // Check WHITE king (uppercase)
+    }
+    else if (current_turn == BLACK_TURN)
+    {
+        king_char = 'k';  // Check BLACK king (lowercase)
+    }
+    else
+    {
+        std::cout << "Invalid turn indicator!" << std::endl;
+        return true;
+    }
+
+    // Find the king's location
+    for (i = 0; i < BOARD_SIZE; i++)
+    {
+        if (!found && state_of_board[i] == king_char)
         {
-            king_index = i;
-            break;
+            file = 'a' + (i % 8);
+            rank = '1' + (i / 8);
+
+            king_location.clear();
+            king_location += file;
+            king_location += rank;
+
+            found = true;
         }
     }
-    if (king_index == -1) 
+
+    if (!found)
     {
-        return false; // King not found, no check
+        return false;  // King not found
     }
-
-    king_location = "";
-    king_location += ('a' + (king_index % 8)); // Get file
-    king_location += ('1' + (king_index / 8)); // Get rank
-
-    // STEP 2: Check if any opponent piece can attack the King
-    for (int i = 0; i < BOARD_SIZE; ++i) 
+    
+    // Check if any OPPONENT piece can attack this king
+    for (i = 0; i < BOARD_SIZE; i++)
     {
-        char piece_char = state_of_board[i];
-        if (piece_char == EMPTY_SQUARE) continue;
-
-        bool piece_is_white = (piece_char >= 'A' && piece_char <= 'Z');
-        if ((piece_is_white && current_turn == WHITE_TURN) || (!piece_is_white && current_turn == BLACK_TURN)) 
+        piece_char = state_of_board[i];
+        if (piece_char != EMPTY_SQUARE)
         {
-            continue; // Skip pieces of the current player
-        }
+            piece_is_white = (piece_char >= 'A' && piece_char <= 'Z');
+            
+            // FIXED: Look for OPPONENT pieces
+            // If checking WHITE's king (current_turn==WHITE), look for BLACK pieces (!piece_is_white)
+            // If checking BLACK's king (current_turn==BLACK), look for WHITE pieces (piece_is_white)
+            if ((current_turn == WHITE_TURN && !piece_is_white) || (current_turn == BLACK_TURN && piece_is_white))
+            {
+                temp_piece = nullptr;
+                piece_file = 'a' + (i % 8);
+                piece_rank = '1' + (i / 8);
+                piece_location = "";
+                piece_location += piece_file;
+                piece_location += piece_rank;
 
-        // Try to validate if this piece can attack the King
-        std::string piece_location = "";
-        piece_location += ('a' + (i % 8)); // File
-        piece_location += ('1' + (i / 8)); // Rank
+                switch (tolower(piece_char))
+                {
+                    case 'r':
+                        temp_piece = new rook(piece_location, piece_is_white);
+                        break;
+                    case 'n':
+                        //TODO temp_piece = new knight(piece_location, piece_is_white);
+                        break;
+                    case 'b':
+                        //TODO temp_piece = new bishop(piece_location, piece_is_white);
+                        break;
+                    case 'q':
+                        //TODO temp_piece = new queen(piece_location, piece_is_white);
+                        break;
+                    case 'k':
+                        temp_piece = new king(piece_location, piece_is_white);
+                        break;
+                    case 'p':
+                        //TODO temp_piece = new pawn(piece_location, piece_is_white);
+                        break;
+                }
 
-        chess_p* temp_piece = nullptr;
-        switch (tolower(piece_char)) 
-        {
-            case 'r': temp_piece = new rook(piece_location, piece_is_white); break;
-            case 'k': temp_piece = new king(piece_location, piece_is_white); break;
-            case 'n': temp_piece = new knight(piece_location, piece_is_white); break;
-            case 'b': temp_piece = new bishop(piece_location, piece_is_white); break;
-            case 'q': temp_piece = new queen(piece_location, piece_is_white); break;
-            case 'p': temp_piece = new pawn(piece_location, piece_is_white); break;
-        }
+                if (temp_piece)
+                {
+                    temp_piece->set_destination(king_location);
+                    result = temp_piece->is_move_ok(state_of_board, false);
+                    
+                    if (result == MoveResult::Valid || result == MoveResult::Valid_Check || result == MoveResult::Valid_Checkmate)
+                    {
+                        delete temp_piece;
+                        return true;
+                    }
 
-        if (temp_piece) {
-            temp_piece->set_destination(king_location);
-            MoveResult result = temp_piece->is_move_ok(state_of_board, false);
-            delete temp_piece;
-
-            if (result == MoveResult::Valid || result == MoveResult::Valid_Check || result == MoveResult::Valid_Checkmate) {
-                return true; // King is under attack
+                    delete temp_piece;
+                }
             }
         }
     }
 
-    return false; // No check
+    return false;
 }
 
  
