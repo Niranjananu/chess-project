@@ -242,7 +242,6 @@ king::king(const std::string& start_loc, bool is_it_white) : chess_p(start_loc, 
 */
 bool is_there_check(std::string state_of_board)
 {
-    // Get whose turn it is
     char current_turn = state_of_board[BOARD_STATE_LENGTH - 1];
     char king_char = '\0';
     std::string king_location = "";
@@ -259,7 +258,6 @@ bool is_there_check(std::string state_of_board)
     MoveResult result = MoveResult::Invalid_IllegalMovement;
 
     // FIXED: If it's WHITE's turn, check if WHITE's king is in danger
-    // If it's BLACK's turn, check if BLACK's king is in danger
     if (current_turn == WHITE_TURN)
     {
         king_char = 'K';  // Check WHITE king (uppercase)
@@ -292,7 +290,7 @@ bool is_there_check(std::string state_of_board)
 
     if (!found)
     {
-        return false;  // King not found (captured)
+        return false;  // King not found
     }
     
     // Check if any OPPONENT piece can attack this king
@@ -303,9 +301,11 @@ bool is_there_check(std::string state_of_board)
         {
             piece_is_white = (piece_char >= 'A' && piece_char <= 'Z');
             
-            // FIXED: Look for opponent pieces
-            // If checking WHITE's king, look for BLACK pieces (and vice versa)
-            if ((current_turn == WHITE_TURN && !piece_is_white) || (current_turn == BLACK_TURN && piece_is_white))
+            // FIXED: Look for OPPONENT pieces
+            // If checking WHITE's king (current_turn==WHITE), look for BLACK pieces (!piece_is_white)
+            // If checking BLACK's king (current_turn==BLACK), look for WHITE pieces (piece_is_white)
+            if ((current_turn == WHITE_TURN && !piece_is_white) || 
+                (current_turn == BLACK_TURN && piece_is_white))
             {
                 temp_piece = nullptr;
                 piece_file = 'a' + (i % 8);
@@ -339,9 +339,8 @@ bool is_there_check(std::string state_of_board)
                 if (temp_piece)
                 {
                     temp_piece->set_destination(king_location);
-                    
-                    // Check if this piece can attack the king (don't recurse)
                     result = temp_piece->is_move_ok(state_of_board, false);
+                    
                     if (result == MoveResult::Valid || 
                         result == MoveResult::Valid_Check || 
                         result == MoveResult::Valid_Checkmate)
