@@ -178,7 +178,7 @@ MoveResult rook::is_move_ok(std::string state_of_board, bool check_for_check)
     }
     
     // Determine opponent's king character
-    if (get_is_white())
+    if (!get_is_white())
     {
         opponent_king = 'K';
     }
@@ -388,13 +388,13 @@ MoveResult king::is_move_ok(std::string state_of_board, bool check_for_check)
     int i = 0;                                               // loop number
 
     // Determine opponent's king character
-    if (get_is_white())
+    if (!get_is_white())
     {
-        opponent_king = 'K';
+        opponent_king = 'K'; // w is big
     }
     else
     {
-        opponent_king = 'k';
+        opponent_king = 'k'; // b is small
     }
 
     // the king legal moves are one square in any direction

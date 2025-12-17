@@ -46,7 +46,7 @@ void test_rook()
     {
         std::cout << "Rook destination not set correctly." << std::endl;
     }
-    MoveResult result = test_rook.is_move_ok("R#####rr########################################################1");
+    MoveResult result = test_rook.is_move_ok("R#####rr########################################################0");
     if(result == MoveResult::Valid_Checkmate)
     {
         std::cout << "Rook move validation passed." << std::endl;
@@ -106,7 +106,7 @@ void test_king()
     {
         std::cout << "king destination not set correctly." << std::endl;
     }
-    MoveResult result = test_king.is_move_ok("k###############################################################1");
+    MoveResult result = test_king.is_move_ok("K###############################################################0");
     if(result == MoveResult::Valid_Checkmate)
     {
         std::cout << "king move validation passed." << std::endl;
@@ -127,7 +127,7 @@ void test_king()
         std::cout << "king move execution failed." << std::endl;
     }
     test_king.set_destination("c1");
-    result = test_king.is_move_ok("#k#######################################K######################1");
+    result = test_king.is_move_ok("#K#######################################k######################0");
     if(result == MoveResult::Valid)
     {
         std::cout << "king move validation 2 passed." << std::endl;
@@ -139,7 +139,7 @@ void test_king()
         std::cout << "king move validation 2 failed." << std::endl;
     } 
     test_king.set_destination("a1");
-    result = test_king.is_move_ok("Kk##############################################################1");
+    result = test_king.is_move_ok("kK##############################################################0");
     if(result == MoveResult::Valid_Checkmate)
     {
         std::cout << "king move validation 3 passed." << std::endl;
