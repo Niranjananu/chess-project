@@ -64,7 +64,7 @@ board::board()
 
 // Destructor to clean up dynamically allocated pieces
 board::~board()
-{
+{ 
 	int i = 0;
 	int j = 0;
 	for (i = 0; i < BOARD_SIZE_UP; ++i)

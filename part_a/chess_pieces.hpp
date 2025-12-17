@@ -89,7 +89,7 @@ public:
     // --- Override Methods --- //
 
 	MoveResult is_move_ok(std::string state_of_board, bool check_for_check = true) override;    
-};     
+};      
 
 /*
 // Class definition for queen chess piece

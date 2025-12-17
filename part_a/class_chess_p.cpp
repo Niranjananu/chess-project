@@ -36,7 +36,7 @@ bool chess_p::get_is_white()
 {
 	return is_white;
 }
-
+ 
 /*
 ^   * fanction name:        chess_p::set_destination
 ---------------------------------------------------------------------------------------

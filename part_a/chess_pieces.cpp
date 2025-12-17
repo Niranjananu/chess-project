@@ -647,7 +647,7 @@ MoveResult queen::is_move_ok(std::string state_of_board, bool check_for_check)
     if (check_for_check)
     {
         return MoveResult::Valid;  // Stub for now
-    }
+    } 
 
     // TODO: Implement queen movement validation (combines rook + bishop, path must be clear)
     return MoveResult::Valid;  // Stub for now

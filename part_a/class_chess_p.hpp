@@ -33,7 +33,7 @@ constexpr int RANK_OFFSET = 1;                           // Index offset for ran
 // --- Class Definition --- //
 */
 class chess_p 
-{
+{ 
 private:
     // Private member variables
     std::string location; // get set in chess_p constructor

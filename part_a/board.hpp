@@ -10,7 +10,7 @@ const std::string STARTING_BOARD_STATE = "RNBQKBNRPPPPPPPP######################
 
 /* Class definition for the chess board */
 class board 
-{
+{ 
 private:
     // Private member variables
 
