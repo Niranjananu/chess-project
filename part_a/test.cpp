@@ -191,7 +191,7 @@ void test_rook_and_king()
     std::cout << "White rook a1 -> a8 : ";
     std::cout << result << std::endl;
 
-    if (result == MoveResult::Valid)
+    if (result == MoveResult::Valid_Check)
     {
         w_rook.move();
 
@@ -199,6 +199,10 @@ void test_rook_and_king()
         board[0] = '#';    // a1
         board[56] = 'R';   // a8
         board.back() = '1'; // black to move
+    }
+    else 
+    {
+        std::cout << "White rook a1 -> a8 didnt get  : MoveResult::Valid_Check it got:" << result;
     }
 
     std::cout << "Board after move 1:\n" << board << std::endl;
@@ -210,13 +214,17 @@ void test_rook_and_king()
     std::cout << "Black king e8 -> d8 : ";
     std::cout << result << std::endl;
 
-    if (result == MoveResult::Valid)
+    if (result == MoveResult::Invalid_SelfCheck)
     {
         b_king.move();
 
         board[60] = '#';  // e8
         board[59] = 'k';  // d8
         board.back() = '0'; // white to move
+    }    
+    else 
+    {
+        std::cout << "Black king e8 -> d8 didnt get: MoveResult::Invalid_SelfCheck it got:" << result;
     }
 
     std::cout << "Board after move 2:\n" << board << std::endl;
@@ -228,13 +236,17 @@ void test_rook_and_king()
     std::cout << "White king e1 -> d2 : ";
     std::cout << result << std::endl;
 
-    if (result == MoveResult::Valid)
+    if (result == MoveResult::Valid_Check)
     {
         w_king.move();
 
         board[4] = '#';    // e1
         board[11] = 'K';   // d2
         board.back() = '1'; // black to move
+    }
+    else 
+    {
+        std::cout << "Black king e8 -> d8 didnt get: MoveResult::Invalid_SelfCheck it got:" << result;
     }
 
     std::cout << "Board after move 3:\n" << board << std::endl;
@@ -246,7 +258,7 @@ void test_rook_and_king()
     std::cout << "White rook a8 -> d8 : ";
     std::cout << result << std::endl;
 
-    if (result == MoveResult::Valid || result == MoveResult::Valid_Checkmate)
+    if (result == MoveResult::Valid_Checkmate)
     {
         w_rook.move();
 
@@ -260,6 +272,26 @@ void test_rook_and_king()
     else
     {
         std::cout << "Final move failed unexpectedly." << std::endl;
+        std::cout << "White rook a8 -> d8 didnt get: MoveResult::Valid_Checkmate it got:" << result;
+    }
+    w_rook.move();
+
+    // remove black king, place rook
+    board[56] = '#';  // a8
+    board[59] = 'R';  // d8
+    board.back() = '1';
+    w_rook.set_destination("d1");
+    result = w_rook.is_move_ok(board);
+    if (result == MoveResult::Valid_Checkmate)
+    {
+        w_rook.move();
+
+        // remove black king, place rook
+        board[56] = '#';  // a8
+        board[59] = 'R';  // d8
+        board.back() = '1';
+
+        std::cout << "if you see this Valid_Checkmate is delayed by 1 round." << std::endl;
     }
 
     std::cout << "Final board:\n" << board << std::endl;
