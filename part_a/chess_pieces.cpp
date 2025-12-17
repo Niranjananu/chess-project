@@ -354,10 +354,11 @@ bool is_there_check(std::string state_of_board)
 */
 MoveResult king::is_move_ok(std::string state_of_board )
 {
-    // !just shit to avoid gcc warnings
-    state_of_board[0] = state_of_board[2];
-    // todo implement king movement validation
-    return MoveResult::Valid;
+    MoveResult result = MoveResult::Invalid_IllegalMovement; // Default to invalid move
+
+    
+
+    return result; // return the appropriate MoveResult after implementing the logic
 }
 
 /*
