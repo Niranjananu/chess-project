@@ -78,7 +78,7 @@ public:
 */
 class knight : public chess_p   
 {    
-private:
+private:    
     // Private member variables
 
 public:     
