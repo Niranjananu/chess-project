@@ -51,7 +51,7 @@ public:
 /*
 we will use the 
 
--state_of_board_as_string
+-state_of_board_as_string    
 -board[BOARD_SIZE_UP][BOARD_SIZE_RIGHT]
 
 we will culculate the backend with the pointers on the board 
