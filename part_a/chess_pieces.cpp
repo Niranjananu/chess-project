@@ -665,6 +665,11 @@ MoveResult queen::is_move_ok(std::string state_of_board, bool check_for_check)
         {
             return MoveResult::Invalid_DestinationOccupiedByOwnPiece;
         }
+        if (is_there_check(new_state))
+        {
+            return MoveResult::Valid_Check;
+        }
+        return MoveResult::Valid;
     }
 
     // TODO: Implement queen movement validation (combines rook + bishop, path must be clear)
