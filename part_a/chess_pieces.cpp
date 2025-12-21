@@ -15,7 +15,7 @@
     * eficency:             O(1) - constant time complexity.
 ---------------------------------------------------------------------------------------
 */
-rook::rook(const std::string& start_loc, bool is_it_white) : chess_p(start_loc, is_it_white){}
+rook::rook(const std::string& start_loc, bool is_it_white ,std::string string_piece_representation) : chess_p(start_loc, is_it_white ,string_piece_representation){}
 
 /*
 ^   * fanction name:        rook::is_move_ok
@@ -236,7 +236,7 @@ MoveResult rook::is_move_ok(std::string state_of_board, bool check_for_check)
     * eficency:             O(1) - constant time complexity.    
 ---------------------------------------------------------------------------------------
 */
-king::king(const std::string& start_loc, bool is_it_white) : chess_p(start_loc, is_it_white) {}
+king::king(const std::string& start_loc, bool is_it_white ,std::string string_piece_representation) : chess_p(start_loc, is_it_white ,string_piece_representation) {}
 
 /*^   * fanction name:      chess_p::is_there_check
 ---------------------------------------------------------------------------------------
@@ -326,7 +326,7 @@ bool is_there_check(std::string state_of_board)
                 switch (tolower(piece_char))
                 {
                     case 'r':
-                        temp_piece = new rook(piece_location, piece_is_white);
+                        temp_piece = new rook(piece_location, piece_is_white , "");
                         break;
                     case 'n':
                         //TODO temp_piece = new knight(piece_location, piece_is_white);
@@ -338,7 +338,7 @@ bool is_there_check(std::string state_of_board)
                         //TODO temp_piece = new queen(piece_location, piece_is_white);
                         break;
                     case 'k':
-                        temp_piece = new king(piece_location, piece_is_white);
+                        temp_piece = new king(piece_location, piece_is_white ,string_piece_representation);
                         break;
                     case 'p':
                         //TODO temp_piece = new pawn(piece_location, piece_is_white);
@@ -547,7 +547,7 @@ MoveResult king::is_move_ok(std::string state_of_board, bool check_for_check)
     * eficency:             O(1) - constant time complexity.
 ---------------------------------------------------------------------------------------
 */
-knight::knight(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_it_white) {}
+knight::knight(std::string start_loc, bool is_it_white ,std::string string_piece_representation) : chess_p(start_loc, is_it_white ,string_piece_representation) {}
 
 /*
 ^   * fanction name:        bishop::bishop
@@ -561,7 +561,7 @@ knight::knight(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_
     * eficency:             O(1) - constant time complexity.
 ---------------------------------------------------------------------------------------
 */
-bishop::bishop(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_it_white) {}
+bishop::bishop(std::string start_loc, bool is_it_white ,std::string string_piece_representation) : chess_p(start_loc, is_it_white ,string_piece_representation) {}
 
 /*
 ^   * fanction name:        queen::queen
@@ -575,7 +575,7 @@ bishop::bishop(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_
     * eficency:             O(1) - constant time complexity.
 ---------------------------------------------------------------------------------------
 */
-queen::queen(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_it_white) {}
+queen::queen(std::string start_loc, bool is_it_white ,std::string string_piece_representation) : chess_p(start_loc, is_it_white ,string_piece_representation) {}
 
 /*
 ^   * fanction name:        pawn::pawn
@@ -589,7 +589,7 @@ queen::queen(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_it
     * eficency:             O(1) - constant time complexity.
 ---------------------------------------------------------------------------------------
 */
-pawn::pawn(std::string start_loc, bool is_it_white) : chess_p(start_loc, is_it_white) {}
+pawn::pawn(std::string start_loc, bool is_it_white ,std::string string_piece_representation) : chess_p(start_loc, is_it_white ,string_piece_representation) {}
 
 // --- Knight is_move_ok ---
 /*
