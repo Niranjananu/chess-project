@@ -16,11 +16,10 @@
     * eficency:             O(n) - linear time complexity, where n is the number of command-line arguments, as it needs to print each argument.
 ---------------------------------------------------------------------------------------
 */
-chess_p::chess_p(std::string loc, bool is_it_white ,std::string string_piece_representation)
+chess_p::chess_p(std::string loc, bool is_it_white)
 {
 	location = loc;
 	is_white = is_it_white;
-	piece_representation = string_piece_representation;
 }
 
 /*

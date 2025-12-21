@@ -48,7 +48,7 @@ public:
 
     // -- Constructor --//
 
-    chess_p(std::string loc, bool is_it_white ,std::string string_piece_representation); // loc: initial location, color: true for white, false for black
+    chess_p(std::string loc, bool is_it_white); // loc: initial location, color: true for white, false for black
 
     // --- Getters --- //
 
