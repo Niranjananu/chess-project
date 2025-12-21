@@ -1,3 +1,5 @@
+//+ part 1 +//
+
 //! fix the bool is_there_check(std::string state_of_board); logic
 
 //! fix the king is_move_ok
@@ -10,4 +12,11 @@
 
 //TODO get the board class runing
 
-//TODO get 
+//TODO get the cmd output runing or the frontend 
+
+//TODO make the main.cpp logic and run a working game
+
+//+ part 2 +//
+
+//TODO get all the chess pieces runing 
+
