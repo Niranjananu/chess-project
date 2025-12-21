@@ -21,7 +21,7 @@ public:
     // Public methods
     // -- Constructor --//
 
-    rook(const std::string& start_loc, bool is_it_white);
+    rook(const std::string& start_loc, bool is_it_white ,std::string string_piece_representation);
 
     // --- Override Methods --- //
 
@@ -43,7 +43,7 @@ public:
     // Public methods
     // -- Constructor --//
 
-    king(const std::string& start_loc, bool is_it_white);
+    king(const std::string& start_loc, bool is_it_white ,std::string string_piece_representation);
 
     // --- Override Methods --- //
 
@@ -63,7 +63,7 @@ private:
 public:
     // Public methods
     // -- Constructor --//
-    pawn(std::string start_loc, bool is_it_white);
+    pawn(std::string start_loc, bool is_it_white ,std::string string_piece_representation);
 
     // --- Override Methods --- //
 
@@ -84,7 +84,7 @@ private:
 public:     
 	// Public methods
     // -- Constructor --//
-	knight(std::string start_loc, bool is_it_white);    
+	knight(std::string start_loc, bool is_it_white ,std::string string_piece_representation);    
 
     // --- Override Methods --- //
 
@@ -105,7 +105,7 @@ private:
 public:
 	// Public methods
     // -- Constructor --//
-	queen(std::string start_loc, bool is_it_white);
+	queen(std::string start_loc, bool is_it_white ,std::string string_piece_representation);
 
     // --- Override Methods --- //
 
@@ -125,7 +125,7 @@ private:
 public:
     // Public methods
     // -- Constructor --//
-    bishop(std::string start_loc, bool is_it_white);
+    bishop(std::string start_loc, bool is_it_white ,std::string string_piece_representation);
 
     // --- Override Methods --- //
 
